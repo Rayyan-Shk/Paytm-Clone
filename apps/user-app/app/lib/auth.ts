@@ -7,7 +7,7 @@ export const authOptions = {
       CredentialsProvider({
           name: 'Credentials',
           credentials: {
-            phone: { label: "Phone number", type: "text", placeholder: "1231231231", required: true },
+            phone: { label: "Phone number", type: "text", placeholder: "9863853389", required: true },
             password: { label: "Password", type: "password", required: true }
           },
           // TODO: User credentials type from next-aut
@@ -33,24 +33,38 @@ export const authOptions = {
             }
 
             try {
-                const user = await db.user.create({
+                const user = await db.$transaction(async (prisma) => {
+                  const newUser = await prisma.user.create({
                     data: {
-                        number: credentials.phone,
-                        password: hashedPassword
+                      number: credentials.phone,
+                      password: hashedPassword
                     }
+                  });
+            
+                  // Create an initial balance for the new user
+                  await prisma.balance.create({
+                    data: {  
+                      userId: newUser.id,
+                      amount: 0,
+                      locked: 0  // Assuming 0 means not locked
+                    }
+                  });
+            
+                  return newUser;
                 });
             
                 return {
-                    id: user.id.toString(),
-                    name: user.name,
-                    email: user.number
+                  id: user.id.toString(),
+                  name: user.name,
+                  email: user.number
                 }
-            } catch(e) {
-                console.error(e);
-            }
-
-            return null
-          },
+              } catch(e) {
+                console.error("Error creating new user:", e);
+                throw e;
+              }
+            
+              return null
+            },
         })
     ],
     secret: process.env.JWT_SECRET || "secret",
