@@ -12,7 +12,6 @@ export default function VenmoLanding() {
     router.push('/transfer');
   };
 
-
   return (
     <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between relative">
       <div className="md:w-3/4 bg-blue-100 rounded-3xl p-12 pt-20 z-10">
@@ -33,7 +32,7 @@ export default function VenmoLanding() {
         </div>
       </div>
       {/* Move the image slightly more left */}
-      <div className="md:absolute md:right-[-80px] md:top-1/2 md:transform md:-translate-y-1/4 z-20">
+      <div className="md:absolute md:right-[-10px] md:top-1/2 md:transform md:-translate-y-1/4 z-20">
         <Image
           src="/venmo.png"
           alt="Friends at a picnic"

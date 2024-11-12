@@ -11,7 +11,7 @@ export default function Layout({
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2>
         </div>
-        <nav className="mt-6">
+        <nav className="mt-4">
           <SidebarItem href="/dashboard" icon={<HomeIcon />} title="Home" />
           <SidebarItem href="/transfer" icon={<TransferIcon />} title="Transfer" />
           <SidebarItem href="/transactions" icon={<TransactionsIcon />} title="Transactions" />
