@@ -7,7 +7,6 @@ import { TextInput } from "@repo/ui/textinput";
 import { createOnRampTransaction } from "../app/lib/actions/createOnRamptxn";
 import { z, ZodError } from "zod";
 
-// Define Zod schema for validation
 const addMoneySchema = z.object({
     amount: z.number()
         .positive("Amount must be a positive number")
@@ -38,7 +37,7 @@ export const AddMoney = () => {
         const successFlag = localStorage.getItem("transactionSuccess");
         if (successFlag === "true") {
             setSuccessMessage("The transaction was completed successfully. Your account balance has been updated.");
-            localStorage.removeItem("transactionSuccess"); // Clear the flag after showing the message
+            localStorage.removeItem("transactionSuccess"); 
         }
     }, []);
 
@@ -50,22 +49,22 @@ export const AddMoney = () => {
             const response = await createOnRampTransaction(amount * 100, provider);
 
             if (response.message === "Money added to balance") {
-                // Set a success flag before redirecting
+            
                 localStorage.setItem("transactionSuccess", "true");
                 window.location.href = redirectUrl || "";
             } else {
-                // Handle transaction failure
+            
                 setErrorMessage("Transaction failed. Please try again.");
-                setSuccessMessage(""); // Clear success message on failure
+                setSuccessMessage("");
             }
         } catch (error) {
             if (error instanceof ZodError) {
                 setErrorMessage(error.errors.map(e => e.message).join(", "));
-                setSuccessMessage(""); // Clear success message on validation error
+                setSuccessMessage("");
             } else {
                 console.error("Error during transaction:", error);
                 setErrorMessage("An error occurred. Please try again later.");
-                setSuccessMessage(""); // Clear success message on error
+                setSuccessMessage(""); 
             }
         }
     };

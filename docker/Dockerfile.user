@@ -7,7 +7,6 @@ COPY package.json package-lock.json turbo.json tsconfig.json ./
 COPY apps ./apps
 COPY packages ./packages
 
-# Install dependencies
 RUN npm install
 
 RUN cd packages/db && npx prisma generate && cd ../..
