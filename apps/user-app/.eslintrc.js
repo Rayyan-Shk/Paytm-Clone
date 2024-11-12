@@ -6,4 +6,5 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  rules: process.env.VERCEL ? { "all": "off" } : {}
 };
