@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { getServerSession } from 'next-auth'
 import { SendCard } from '../../../components/SendCard'
 import { authOptions } from '../../lib/auth'
@@ -18,12 +20,6 @@ async function getBalance() {
     locked: balance?.locked || 0,
   }
 }
-type P2PTransaction = {
-  timestamp: Date
-  amount: number
-  fromUserId: number
-  toUserId: number
-}
 
 async function getP2PTransactions() {
   const session = await getServerSession(authOptions)
@@ -36,7 +32,7 @@ async function getP2PTransactions() {
     },
   })
 
-  return txns.map((t: P2PTransaction) => ({
+  return txns.map((t) => ({
     time: t.timestamp,
     amount: t.amount,
     transactionType: t.fromUserId == session?.user?.id ? 'Sent' : 'Received',
