@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-nocheck
 
 import { getServerSession } from 'next-auth'
 import { SendCard } from '../../../components/SendCard'
